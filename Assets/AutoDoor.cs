@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class DoorTriggerSimple : MonoBehaviour
 {
-    public Transform doorPivot;       // Assign the door pivot in the Inspector
-    public float openAngle = 90f;     // The angle to open the door
-    public float openSpeed = 2f;      // The speed of rotation
+    public Transform doorPivot;   // Assign the door pivot in the Inspector
+    public float openAngle = 90f;    // The angle to open the door
+    public float openSpeed = 2f;    // The speed of rotation
 
     private Quaternion closedRotation;
     private Quaternion openRotationPositive;

@@ -2,22 +2,22 @@ using UnityEngine;
 
 public class DancerBPMSync : MonoBehaviour
 {
-    private Animator dancerAnimator; // Renamed for clarity
-    private BPMManager bpmManager;    // Reference to the central BPM manager
+    private Animator dancerAnimator;
+    private BPMManager bpmManager;
 
     [Header("Animation Sync Settings")]
     [Tooltip("How many *musical beats* does one full loop of this specific dance animation take?")]
-    [Range(0.1f, 16.0f)] // A reasonable range for beats per loop
-    public float beatsPerAnimationLoop = 4.0f; // E.g., a 4/4 dance loop takes 4 beats
+    [Range(0.1f, 16.0f)] // Beat range
+    public float beatsPerAnimationLoop = 4.0f;
 
     void Awake()
     {
-        // Get the Animator component on this GameObject
+        // Gets the Animator component on this GameObject
         dancerAnimator = GetComponent<Animator>();
         if (dancerAnimator == null)
         {
             Debug.LogError("DancerBPMSync: No Animator component found on this GameObject. Disabling script.", this);
-            enabled = false; // Disable the script if no Animator is found
+            enabled = false; // Disable the script if no Animator
             return;
         }
 
@@ -26,7 +26,7 @@ public class DancerBPMSync : MonoBehaviour
         if (bpmManager == null)
         {
             Debug.LogError("DancerBPMSync: No BPMManager found in the scene. Please add one. Disabling script.", this);
-            enabled = false; // Disable if no BPMManager to sync with
+            enabled = false; // Disables if no BPMManager to sync with
             return;
         }
 
@@ -36,29 +36,25 @@ public class DancerBPMSync : MonoBehaviour
 
     void OnEnable()
     {
-        // Subscribe to the OnBeat event from BPMManager
-        // This will allow us to react if BPM changes dynamically (though we're mostly doing continuous speed)
+        // Subscribes to the OnBeat event from BPMManager
+        // This will allow for dynamix BPM changes
         BPMManager.OnBeat += OnBeatHandler;
     }
 
     void OnDisable()
     {
-        // Unsubscribe to prevent memory leaks when the GameObject is disabled or destroyed
+        // Unsubscribes to prevent memory leaks when Gameobject disabled
         BPMManager.OnBeat -= OnBeatHandler;
     }
 
-    // This method is called by the BPMManager every time a beat occurs.
-    // While we're continuously adjusting speed, this could be used for beat-triggered effects.
+    // This method is called by the BPMManager when beat occurs
     private void OnBeatHandler()
     {
-        // For a continuous loop, the speed is already set in UpdateAnimationSpeed().
-        // If you wanted a *pulse* or *momentary reaction* on each beat, you'd put that logic here.
-        // Example: If you had a "Beat" trigger in your Animator Controller:
+        // For a *pulse* or *momentary reaction* on each beat
         // dancerAnimator.SetTrigger("Beat");
     }
 
-    // This function calculates and sets the Animator's overall speed
-    // to match the desired BPM and the animation's beats per loop.
+    // Calculates and sets the Animator's overall speed based on desired BPM and the animation's beats per loop
     private void UpdateAnimationSpeed()
     {
         if (bpmManager == null || dancerAnimator == null) return;
@@ -73,9 +69,4 @@ public class DancerBPMSync : MonoBehaviour
         dancerAnimator.speed = beatsPerSecond / beatsPerAnimationLoop;
     }
 
-    // Optional: If BPM can change during runtime, you'd need to re-calculate speed.
-    // You could call UpdateAnimationSpeed() whenever BPMManager's BPM changes.
-    // For simplicity, we'll assume BPM is mostly static after start, or handled by the BPMManager's OnBeat.
-    // However, if the BPMManager uses a SetBPM method, you could also call UpdateAnimationSpeed directly from there
-    // or set up an event for BPM changes.
 }

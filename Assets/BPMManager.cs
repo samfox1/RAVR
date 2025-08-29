@@ -6,7 +6,7 @@ public class BPMManager : MonoBehaviour
 {
     [Header("BPM Settings")]
     [Range(60, 200)] // Allows setting BPM between 60 and 200
-    public float bpm = 123f; // BPM Assignment
+    public float bpm = 123f; // BPM Assignment - change l8r
     public float beatOffset = 0f; // Time in seconds to offset the beat start
 
     private float beatInterval; // Time in seconds between each beat
@@ -16,7 +16,7 @@ public class BPMManager : MonoBehaviour
     public delegate void OnBeatDelegate();
     public static event OnBeatDelegate OnBeat;
 
-    // Optional: Reference to the AudioSource playing the music
+    // Reference to the AudioSource playing the music
     [Header("Audio Source (Optional)")]
     public AudioSource musicSource;
 
@@ -32,18 +32,18 @@ public class BPMManager : MonoBehaviour
         {
             if (OnBeat != null) // Check if anyone is listening
             {
-                OnBeat(); // Trigger the beat event
+                OnBeat(); // Trigger beat event
             }
-            nextBeatTime += beatInterval; // Schedule the next beat
+            nextBeatTime += beatInterval; // Schedule next beat
         }
     }
 
-    // Call this method if you change BPM during runtime
+    // Method for changing BPM during runtime
     public void SetBPM(float newBPM)
     {
         bpm = newBPM;
         UpdateBPMVariables();
-        // Optional: Adjust nextBeatTime to sync immediately
+        // TODO: Adjust nextBeatTime to sync immediately
         nextBeatTime = Time.time + beatInterval; // This will re-sync to the new beat
     }
 
