@@ -1,0 +1,26 @@
+# --- Unity Generated Folders ---
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+
+# --- OS / IDE stuff ---
+.DS_Store
+.vscode/
+.idea/
+*.userprefs
+*.csproj
+
+# --- Unity Cache ---
+sysinfo.txt
+
+# --- Crash Reports ---
+*.stackdump
+
+# --- Keep important files ---
+!*.cs
+!*.sln
